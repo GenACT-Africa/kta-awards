@@ -1,9 +1,11 @@
 {
   "name": "kta-awards",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Landing page, public voting, jury scoring and weighted results for the Kenya–Tanzania Achievers Awards.",
   "private": true,
+  "type": "module",
   "main": "server.js",
   "scripts": { "start": "node server.js" },
-  "engines": { "node": ">=18" }
+  "engines": { "node": ">=18" },
+  "dependencies": { "@netlify/blobs": "^10.7.13" }
 }

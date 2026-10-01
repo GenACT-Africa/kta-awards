@@ -1,8 +1,20 @@
-# KTA Awards: local voting system
+# KTA Awards voting system
 
-The landing page, public ballot, jury scoring, organizer panel and results page for the Kenya–Tanzania Achievers Awards. It runs on your own computer with no extra packages.
+The landing page, public ballot, jury scoring, organizer panel and results page for the Kenya–Tanzania Achievers Awards. It runs on Netlify (pages plus a Netlify Function, with data in Netlify Blobs) or on your own computer.
 
-## Run it
+## Deploy on Netlify
+
+The repo includes `netlify.toml`, so Netlify serves `public/` and runs the API from `netlify/functions/api.mjs`.
+
+1. In Netlify, open the project → **Project configuration → Environment variables** and add:
+   - `ADMIN_PASSWORD`: the organizer password.
+   - `KTA_SECRET`: a long random string, at least 32 characters. It signs sign-in cookies and scrambles phone numbers. **Set it once and never change it**: changing it signs everyone out and makes earlier voters look new.
+2. Trigger a redeploy (**Deploys → Trigger deploy**).
+3. Open `https://<your-site>.netlify.app/admin` and sign in.
+
+Votes, jury scores and settings live in the project's Netlify Blobs store named `kta-awards`. They are kept across deploys.
+
+## Run it on your computer
 
 1. Install **Node.js 18 or newer** from https://nodejs.org (check with `node -v`).
 2. Open Terminal in this folder and run:
@@ -19,7 +31,7 @@ To use your own password or port:
 ADMIN_PASSWORD="choose-a-strong-one" PORT=8080 npm start
 ```
 
-Stop the server with **Ctrl + C**. Everything is saved in `data/db.json`.
+Stop the server with **Ctrl + C**. Local data is saved under `data/` and is separate from the Netlify data.
 
 ## Pages
 
@@ -47,22 +59,24 @@ Results stay hidden until you click **Publish results** and turn on **Show publi
 4. Add jurors under **Jury panel** and send each one their access code privately. Each code is shown only once.
 5. Confirm the jury/public split and add a closing note, such as the voting deadline.
 
-## Putting it online
+## Other hosting
 
-As set up, the system works on your computer and on your Wi-Fi network (the Terminal prints a network address you can share at the venue). To let the public vote from anywhere, host it on a server with HTTPS, for example a small VPS or a Node host such as Render or Railway. Run `npm start` there, set `ADMIN_PASSWORD`, and back up `data/db.json`.
+`npm start` also runs on any Node host (a VPS, Render, Railway). Set `ADMIN_PASSWORD` and `KTA_SECRET`, put it behind HTTPS, and back up the `data/` folder.
 
 ## Vote integrity: what it does and doesn't do
 
 - One ballot per mobile number. Numbers are normalised, so `0712 345 678` and `+255 712 345 678` count as the same person.
 - Phone numbers are never stored. Only a salted hash is kept.
 - Sign-ins and logins are rate-limited per network, and organizer and jury actions need their own sessions.
-- **The phone number isn't verified.** Someone could vote with numbers that aren't theirs. Before a public launch, connect a one-time-code check (for example Abila's WhatsApp Business API) at `POST /api/voter` in `server.js`, or count SMS/WhatsApp votes externally and enter the totals as off-platform votes.
+- **The phone number isn't verified.** Someone could vote with numbers that aren't theirs. Before a public launch, connect a one-time-code check (for example Abila's WhatsApp Business API) at `POST /api/voter` in `lib/app.js`, or count SMS/WhatsApp votes externally and enter the totals as off-platform votes.
 
 ## Files
 
 ```
-server.js          Web server, API and scoring (no dependencies)
-public/            Pages, styles and browser scripts
-data/db.json       All data, created on first run (back this up)
-data/admin-password.txt   Generated organizer password
+lib/app.js                  API and scoring, shared by both setups
+netlify/functions/api.mjs   Netlify Function: runs the API, stores data in Netlify Blobs
+netlify.toml                Netlify settings (publish folder, functions, security headers)
+server.js                   Local server: runs the same API, stores data in data/
+public/                     Pages, styles and browser scripts
+data/                       Local data and generated secrets (not in git)
 ```
