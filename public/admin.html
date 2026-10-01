@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>KTA Organizer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@500;700;900&family=Source+Sans+3:wght@400;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="/app.css">
+</head>
+<body>
+<header class="mast">
+  <svg viewBox="0 0 1000 220" preserveAspectRatio="none" aria-hidden="true"><path d="M-20 200 C 260 190, 520 170, 700 110 S 930 10, 1020 -10" fill="none" stroke="#e0b44a" stroke-width="2" opacity=".75"/></svg>
+  <div class="mast-in">
+    <div class="topline"><a class="brand" href="/">KTA <span>Awards</span></a><nav class="links" aria-label="Pages"><a href="/">Home</a><a href="/vote">Vote</a><a href="/results">Results</a><a href="/jury">Jury</a><a href="/admin" aria-current="page">Organizer</a></nav></div>
+    <div class="eyebrow">Organizer</div>
+    <h1>Run the awards</h1>
+    <p>Manage finalists, the jury panel and the voting window, then publish results.</p>
+    
+  </div>
+</header>
+<main>
+<div class="panel signin" id="alogin" hidden>
+  <h2>Organizer sign-in</h2>
+  <p class="sub">The password is printed when the server starts, and saved in data/admin-password.txt.</p>
+  <form id="aloginForm" class="row">
+    <div class="field"><label for="apw">Password</label><input type="password" id="apw" autocomplete="current-password" required></div>
+    <button class="btn primary" type="submit">Sign in</button>
+  </form>
+  <div class="err" id="aloginErr" role="alert"></div>
+</div>
+<div id="adminApp" hidden>
+  <div class="toolbar"><div class="chips" id="adminTabs">
+    <button class="chip" data-t="results" aria-pressed="true">Live results</button>
+    <button class="chip" data-t="nominees" aria-pressed="false">Nominees</button>
+    <button class="chip" data-t="jury" aria-pressed="false">Jury panel</button>
+    <button class="chip" data-t="settings" aria-pressed="false">Settings &amp; categories</button>
+  </div><button class="btn sm" id="logout">Sign out</button></div>
+
+  <section data-sec="results">
+    <div class="panel">
+      <div class="toolbar" style="margin-bottom:6px">
+        <div><h2>Live weighted results</h2><p class="sub" id="resSub" style="margin:0"></p></div>
+        <div class="row"><a class="btn" href="/api/admin/export.csv">Export CSV</a><button class="btn primary" id="publish">Publish results</button></div>
+      </div>
+      <div class="stat-line" id="stats"></div>
+    </div>
+    <div id="liveResults"></div>
+  </section>
+
+  <section data-sec="nominees" hidden>
+    <div class="panel">
+      <h2 id="nomFormTitle">Add a nominee</h2>
+      <p class="sub">Finalists appear on the public ballot as soon as you save them.</p>
+      <form id="nomForm">
+        <div class="row">
+          <div class="field"><label for="nName">Name</label><input type="text" id="nName" placeholder="Full name"></div>
+          <div class="field"><label for="nCat">Category</label><select id="nCat"></select></div>
+        </div>
+        <div class="row" style="margin-top:10px"><div class="field"><label for="nOrg">Role and organisation</label><input type="text" id="nOrg" placeholder="e.g. Head Teacher, Arusha Academy"></div></div>
+        <div class="row" style="margin-top:10px"><div class="field"><label for="nBio">Citation (one or two sentences)</label><textarea id="nBio" placeholder="What they achieved and who it served"></textarea></div></div>
+        <div class="row" style="margin-top:10px"><button class="btn primary" type="submit" id="saveNom">Add nominee</button><button class="btn" type="button" id="cancelNom" hidden>Cancel edit</button></div>
+      </form>
+    </div>
+    <div class="panel">
+      <div class="toolbar" style="margin-bottom:10px">
+        <div><h2>Nominees and tallies</h2><p class="sub" style="margin:0">Off-platform votes: add counts from SMS, WhatsApp or paper ballots so they join the public score.</p></div>
+        <select id="catFilter" aria-label="Filter by category" style="width:auto"></select>
+      </div>
+      <div id="nomTable"></div>
+    </div>
+  </section>
+
+  <section data-sec="jury" hidden>
+    <div class="panel">
+      <h2>Jury panel</h2>
+      <p class="sub">Each juror signs in at /jury with their own access code. Codes are shown once, when you add the juror. Only scores from people on this list count.</p>
+      <form id="jurorForm" class="row">
+        <div class="field"><label for="jName">Juror name</label><input type="text" id="jName" placeholder="Full name"></div>
+        <button class="btn primary" type="submit">Add juror</button>
+      </form>
+      <div id="newCode"></div>
+      <div id="jurorList" style="margin-top:12px"></div>
+    </div>
+  </section>
+
+  <section data-sec="settings" hidden>
+    <div class="panel">
+      <h2>Voting settings</h2>
+      <p class="sub">Final score = jury weight × jury score + public weight × public score.</p>
+      <div class="row" style="gap:20px">
+        <label class="switch"><input type="checkbox" id="setOpen"> Public voting open</label>
+        <label class="switch"><input type="checkbox" id="setPublished"> Show published results on the Results page</label>
+      </div>
+      <div class="weights" style="margin-top:16px">
+        <input type="range" id="setJury" min="0" max="100" step="5" aria-label="Jury weight">
+        <div class="wsplit"><span>Jury <b id="wJury">80%</b></span><span>Public <b id="wPublic">20%</b></span></div>
+      </div>
+      <div class="row" style="margin-top:14px">
+        <div class="field"><label for="setNote">Note shown to voters</label><input type="text" id="setNote" placeholder="e.g. Voting closes Friday 27 November, 23:59 EAT"></div>
+        <button class="btn primary" id="saveSettings">Save settings</button>
+      </div>
+    </div>
+    <div class="panel">
+      <h2>Categories</h2>
+      <p class="sub">The deck lists 17 of the 33 categories. Add the rest as the committee confirms them.</p>
+      <form id="catForm" class="row">
+        <div class="field"><label for="cName">Category name</label><input type="text" id="cName"></div>
+        <div class="field"><label for="cPillar">Pillar</label><select id="cPillar"></select></div>
+        <button class="btn" type="submit">Add</button>
+      </form>
+      <div id="catList" style="margin-top:10px"></div>
+    </div>
+  </section>
+</div>
+</main>
+<script src="/common.js"></script>
+<script src="/admin.js"></script>
+</body>
+</html>

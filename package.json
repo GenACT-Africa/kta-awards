@@ -1,0 +1,9 @@
+{
+  "name": "kta-awards",
+  "version": "1.0.0",
+  "description": "Landing page, public voting, jury scoring and weighted results for the Kenya–Tanzania Achievers Awards.",
+  "private": true,
+  "main": "server.js",
+  "scripts": { "start": "node server.js" },
+  "engines": { "node": ">=18" }
+}
