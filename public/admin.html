@@ -2,18 +2,20 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>KTA Organizer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@500;700;900&family=Source+Sans+3:wght@400;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caladea:ital,wght@0,400;0,700;1,700&family=Carlito:ital,wght@0,400;0,700;1,400&display=swap">
 <link rel="stylesheet" href="/app.css">
 </head>
 <body>
 <header class="mast">
-  <svg viewBox="0 0 1000 220" preserveAspectRatio="none" aria-hidden="true"><path d="M-20 200 C 260 190, 520 170, 700 110 S 930 10, 1020 -10" fill="none" stroke="#ffffff" stroke-width="1.5" opacity=".5"/></svg>
+  <div class="flagbar" aria-hidden="true"><i></i><i></i><i></i></div>
   <div class="mast-in">
-    <div class="topline"><a class="brand" href="/">KTA <span>Awards</span></a><nav class="links" aria-label="Pages"><a href="/">Home</a><a href="/vote">Vote</a><a href="/results">Results</a><a href="/jury">Jury</a><a href="/admin" aria-current="page">Organizer</a></nav></div>
+    <div class="topline"><a class="brand" href="/"><span class="brand-k">KTA</span> Awards</a><nav class="links" aria-label="Pages"><a href="/">Home</a><a href="/vote">Vote</a><a href="/results">Results</a><a href="/jury">Jury</a><a href="/admin" aria-current="page">Organizer</a></nav></div>
     <div class="eyebrow">Organizer</div>
     <h1>Run the awards</h1>
     <p>Manage finalists, the jury panel and the voting window, then publish results.</p>
@@ -104,7 +106,7 @@
     </div>
     <div class="panel">
       <h2>Categories</h2>
-      <p class="sub">The deck lists 17 of the 33 categories. Add the rest as the committee confirms them.</p>
+      <p class="sub">All 33 categories from the proposal are loaded. Add one here only if the committee creates a new award; delete a category only before anyone votes in it.</p>
       <form id="catForm" class="row">
         <div class="field"><label for="cName">Category name</label><input type="text" id="cName"></div>
         <div class="field"><label for="cPillar">Pillar</label><select id="cPillar"></select></div>
@@ -115,6 +117,7 @@
   </section>
 </div>
 </main>
+<footer class="site-foot"><div><span>Kenya-Tanzania Achievers Awards &nbsp;|&nbsp; 12 December 2026 &nbsp;|&nbsp; Serena Hotel, Dar es Salaam</span><span>Organised by Abila Communications</span></div></footer>
 <script src="/common.js"></script>
 <script src="/admin.js"></script>
 </body>

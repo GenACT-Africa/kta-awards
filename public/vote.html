@@ -2,18 +2,20 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
+<meta name="theme-color" content="#ffffff">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>KTA Awards Ballot</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Red+Hat+Display:wght@500;700;900&family=Source+Sans+3:wght@400;600;700&family=IBM+Plex+Mono:wght@500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caladea:ital,wght@0,400;0,700;1,700&family=Carlito:ital,wght@0,400;0,700;1,400&display=swap">
 <link rel="stylesheet" href="/app.css">
 </head>
 <body>
 <header class="mast">
-  <svg viewBox="0 0 1000 220" preserveAspectRatio="none" aria-hidden="true"><path d="M-20 200 C 260 190, 520 170, 700 110 S 930 10, 1020 -10" fill="none" stroke="#ffffff" stroke-width="1.5" opacity=".5"/></svg>
+  <div class="flagbar" aria-hidden="true"><i></i><i></i><i></i></div>
   <div class="mast-in">
-    <div class="topline"><a class="brand" href="/">KTA <span>Awards</span></a><nav class="links" aria-label="Pages"><a href="/">Home</a><a href="/vote" aria-current="page">Vote</a><a href="/results">Results</a><a href="/jury">Jury</a><a href="/admin">Organizer</a></nav></div>
+    <div class="topline"><a class="brand" href="/"><span class="brand-k">KTA</span> Awards</a><nav class="links" aria-label="Pages"><a href="/">Home</a><a href="/vote" aria-current="page">Vote</a><a href="/results">Results</a><a href="/jury">Jury</a><a href="/admin">Organizer</a></nav></div>
     <div class="eyebrow">Public choice vote</div>
     <h1>Cast your vote</h1>
     <p>Pick one finalist in each category. You can change your picks until voting closes.</p>
@@ -33,6 +35,7 @@
 </div>
 <div id="voteBody"></div>
 </main>
+<footer class="site-foot"><div><span>Kenya-Tanzania Achievers Awards &nbsp;|&nbsp; 12 December 2026 &nbsp;|&nbsp; Serena Hotel, Dar es Salaam</span><span>Organised by Abila Communications</span></div></footer>
 <script src="/common.js"></script>
 <script src="/vote.js"></script>
 </body>

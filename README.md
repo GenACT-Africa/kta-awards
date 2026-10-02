@@ -53,11 +53,15 @@ Results stay hidden until you click **Publish results** and turn on **Show publi
 
 ## First-time setup checklist
 
-1. Sign in at `/admin` and delete the two **Sample** nominees in Educator of the Year.
-2. Add the remaining categories (the deck names 17 of the 33).
-3. Add finalists under **Nominees**.
-4. Add jurors under **Jury panel** and send each one their access code privately. Each code is shown only once.
-5. Confirm the jury/public split and add a closing note, such as the voting deadline.
+1. Sign in at `/admin`. All 33 categories from the October 2026 proposal are already loaded, and public voting starts **closed**.
+2. Add finalists under **Nominees**.
+3. Add jurors under **Jury panel** and send each one their access code privately. Each code is shown only once.
+4. Confirm the jury/public split and add a closing note, such as the voting deadline.
+5. Turn on **Public voting open** in **Settings & categories** when the finalists are ready.
+
+## Data updates
+
+When the app starts it upgrades saved data automatically (`migrate()` in `lib/app.js`). Version 2 loads the 33 categories from the October 2026 proposal (`lib/categories.js`) with eligibility and evidence text, keeps the ids of the 17 earlier categories so existing votes still count, keeps any category added by hand, removes the two Sample nominees, and closes public voting if no real finalists exist yet.
 
 ## Other hosting
 

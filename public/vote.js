@@ -36,7 +36,8 @@ function render() {
     const sec = el("div", { class: "pillar" }, el("div", { class: "pillar-h" }, el("h2", { text: p }), el("span", { text: `${cats.length} ${cats.length === 1 ? "category" : "categories"}` })));
     for (const c of cats) {
       const noms = nomsIn(c.id);
-      const box = el("div", { class: "cat" }, el("div", { class: "cat-h" }, el("h3", { text: c.name }), S.me.picks[c.id] ? el("span", { class: "voted", text: "Voted" }) : null));
+      const box = el("div", { class: "cat" }, el("div", { class: "cat-h" }, el("h3", { text: c.name }), S.me.picks[c.id] ? el("span", { class: "voted", text: "Voted" }) : null),
+        c.qualifies ? el("details", { class: "elig" }, el("summary", {}, "Who qualifies"), el("p", {}, c.qualifies), c.evidence ? el("p", { class: "muted" }, "Evidence required: ", c.evidence) : null) : null);
       if (!noms.length) { box.append(el("div", { class: "empty-cat", text: "Finalists to be announced." })); sec.append(box); continue; }
       const grid = el("div", { class: "grid", role: "radiogroup", "aria-label": c.name });
       for (const n of noms) {

@@ -21,6 +21,11 @@ function render() {
     el("div", { class: "row", style: "margin-top:14px" },
       el("div", { class: "field" }, el("label", { for: "catSel", text: "Category" }), sel),
       el("div", { class: "jtotal" }, el("b", { text: `${doneCats}/${cats.length}` }), " categories fully scored"))));
+  const cur = cats.find(c => c.id === S.cat);
+  if (cur && (cur.qualifies || cur.evidence)) b.append(el("div", { class: "notice elig-box" },
+    el("strong", { text: cur.name }),
+    cur.qualifies ? el("p", {}, el("b", { text: "Who qualifies: " }), cur.qualifies) : null,
+    cur.evidence ? el("p", {}, el("b", { text: "Evidence to look for: " }), cur.evidence) : null));
   for (const n of nomsIn(S.cat)) {
     const sc = S.scores[n.id] || {};
     const total = CRITERIA.reduce((a, k) => a + (Number(sc[k.k]) || 0), 0);
